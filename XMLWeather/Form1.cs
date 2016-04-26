@@ -13,6 +13,11 @@ namespace XMLWeather
 {
     public partial class Form1 : Form
     {
+        #region Variables
+        //ints
+        int day1, mounth, year, finaltotoal = 0;
+        #endregion
+
         public Form1()
         {
             InitializeComponent();
@@ -21,10 +26,18 @@ namespace XMLWeather
             GetData();
 
             // take info from the current weather file and display it to the screen
-            ExtractCurrent();
+            // ExtractCurrent();
 
             // take info from the forecast weather file and display it to the screen
-            ExtractForecast();
+            //ExtractForecast();
+
+            // f is the form that this control is on - ("this" is the current User Control)
+            Form f = this.FindForm();
+            f.Controls.Remove(this);
+
+            //if there is a wrong press then game over
+            Current ms = new Current();
+            f.Controls.Add(ms);
         }
 
         private static void GetData()
@@ -36,29 +49,7 @@ namespace XMLWeather
             
             client.DownloadFile(currentFile, "WeatherData.xml");
             client.DownloadFile(forecastFile, "WeatherData7Day.xml");
-        }
-
-        private void ExtractCurrent()
-        {
-            XmlDocument doc = new XmlDocument();
-            doc.Load("WeatherData.xml");
-
-            //create a node variable to represent the parent element
-            XmlNode parent;
-            parent = doc.DocumentElement;
-
-            //check each child of the parent element
-            foreach (XmlNode child in parent.ChildNodes)
-            {
-                // TODO if the "city" element is found display the value of it's "name" attribute
-            }
-        }
-              
-        private void ExtractForecast()
-        {
-                     
-        }
-
+        }     
 
         private void MakePictureParent()
         {
