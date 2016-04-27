@@ -34,6 +34,23 @@ namespace XMLWeather
 
             foreach (XmlNode child in parent.ChildNodes)
             {
+
+                if (child.Name == "location")
+                {
+                    foreach (XmlNode grandchild in child.ChildNodes)
+                    {
+                        if (grandchild.Name == "name")
+                        {
+                            locationLabel.Text = grandchild.InnerText;
+                        }
+
+                        if  (grandchild.Name == "country")
+                        {
+                            locationLabel.Text +=  ", " + grandchild.InnerText;
+                        }
+                    }
+                }
+
                 if (child.Name == "forecast")
                 {
                     foreach (XmlNode grandchild in child.ChildNodes)
@@ -51,16 +68,40 @@ namespace XMLWeather
                                 #region Get Data
                                 if (grandchild.Name == "time")
                                 {
-                                    dateLabel.Text = grandchild.Attributes["day"].Value;
+                                    dateLabel.Text = Convert.ToDateTime(grandchild.Attributes["day"].Value).ToString("MMM dd");
 
                                     foreach (XmlNode greatgrandchild in grandchild.ChildNodes)
                                     {
+                                        if (greatgrandchild.Name == "symbol")
+                                        {
+                                            if (Convert.ToInt16(greatgrandchild.Attributes["number"].Value) < 300)
+                                            {
+                                                weatherBox.BackgroundImage = Properties.Resources._4;
+                                            }
+                                            else if (Convert.ToInt16(greatgrandchild.Attributes["number"].Value) < 600)
+                                            {
+                                                weatherBox.BackgroundImage = Properties.Resources._3;
+                                            }
+                                            else if (Convert.ToInt16(greatgrandchild.Attributes["number"].Value) < 700)
+                                            {
+                                                weatherBox.BackgroundImage = Properties.Resources._5;
+                                            }
+                                            else if (Convert.ToInt16(greatgrandchild.Attributes["number"].Value) == 800)
+                                            {
+                                                weatherBox.BackgroundImage = Properties.Resources._0;
+                                            }
+                                            else if (Convert.ToInt16(greatgrandchild.Attributes["number"].Value) < 900)
+                                            {
+                                                weatherBox.BackgroundImage = Properties.Resources._1;
+                                            }
+                                        }
                                         if (greatgrandchild.Name == "windSpeed")
                                         {
                                             windLAbel.Text = greatgrandchild.Attributes["name"].Value;
                                         }
-                                        if (greatgrandchild.Name == "")
+                                        if (greatgrandchild.Name == "temperature")
                                         {
+                                            tempLabel.Text = greatgrandchild.Attributes["max"].Value + " - " + greatgrandchild.Attributes["min"].Value;
                                         }
                                     }
                                 }
@@ -68,6 +109,47 @@ namespace XMLWeather
                                 break;
 
                             case 2:
+                                #region Get Data
+                                if (grandchild.Name == "time")
+                                {
+                                    date2Label.Text = Convert.ToDateTime(grandchild.Attributes["day"].Value).ToString("MMM dd");
+
+                                    foreach (XmlNode greatgrandchild in grandchild.ChildNodes)
+                                    {
+                                        if (greatgrandchild.Name == "symbol")
+                                        {
+                                            if (Convert.ToInt16(greatgrandchild.Attributes["number"].Value) < 300)
+                                            {
+                                                weather2Box.BackgroundImage = Properties.Resources._4;
+                                            }
+                                            else if (Convert.ToInt16(greatgrandchild.Attributes["number"].Value) < 600)
+                                            {
+                                                weather2Box.BackgroundImage = Properties.Resources._3;
+                                            }
+                                            else if (Convert.ToInt16(greatgrandchild.Attributes["number"].Value) < 700)
+                                            {
+                                                weather2Box.BackgroundImage = Properties.Resources._5;
+                                            }
+                                            else if (Convert.ToInt16(greatgrandchild.Attributes["number"].Value) == 800)
+                                            {
+                                                weather2Box.BackgroundImage = Properties.Resources._0;
+                                            }
+                                            else if (Convert.ToInt16(greatgrandchild.Attributes["number"].Value) < 900)
+                                            {
+                                                weather2Box.BackgroundImage = Properties.Resources._1;
+                                            }
+                                        }
+                                        if (greatgrandchild.Name == "windSpeed")
+                                        {
+                                            wind2Label.Text = greatgrandchild.Attributes["name"].Value;
+                                        }
+                                        if (greatgrandchild.Name == "temperature")
+                                        {
+                                            temp2Label.Text = greatgrandchild.Attributes["max"].Value + " - " + greatgrandchild.Attributes["min"].Value;
+                                        }
+                                    }
+                                }
+                                #endregion
                                 day++;
                                 break;
 
@@ -91,5 +173,7 @@ namespace XMLWeather
             Current c = new Current();
             f.Controls.Add(c);
         }
+
+      
     }
 }
