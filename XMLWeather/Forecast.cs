@@ -19,6 +19,7 @@ namespace XMLWeather
 
         private void Forecast_Load(object sender, EventArgs e)
         {
+            //Load the forcast
             ExtractForecast();
         }
 
@@ -34,7 +35,7 @@ namespace XMLWeather
 
             foreach (XmlNode child in parent.ChildNodes)
             {
-
+                //get to location of the weather
                 if (child.Name == "location")
                 {
                     foreach (XmlNode grandchild in child.ChildNodes)
@@ -51,6 +52,7 @@ namespace XMLWeather
                     }
                 }
 
+                //find each day that we are predicting for
                 if (child.Name == "forecast")
                 {
                     foreach (XmlNode grandchild in child.ChildNodes)
@@ -58,6 +60,7 @@ namespace XMLWeather
 
                         switch (day)
                         {
+                            //skip the first day
                             case 0:
                                 day++;
                                 break;
@@ -65,6 +68,7 @@ namespace XMLWeather
                             case 1:
                                 day++;
 
+                                //get data for the app
                                 #region Get Data
                                 if (grandchild.Name == "time")
                                 {
@@ -109,6 +113,7 @@ namespace XMLWeather
                                 break;
 
                             case 2:
+                                //get data for the app
                                 #region Get Data
                                 if (grandchild.Name == "time")
                                 {
@@ -163,6 +168,7 @@ namespace XMLWeather
 
         }
 
+        //switch the control screen to the current weather
         private void button1_Click(object sender, EventArgs e)
         {
             // f is the form that this control is on - ("this" is the current User Control)

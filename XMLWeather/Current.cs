@@ -27,6 +27,7 @@ namespace XMLWeather
 
         private void Current_Load(object sender, EventArgs e)
         {
+            //Load the currnet weather
             ExtractCurrent();
         }
 
@@ -52,6 +53,7 @@ namespace XMLWeather
 
                     foreach (XmlNode grandchild in child.ChildNodes)
                     {
+                        // show the current location
                         if (grandchild.Name == "country")
                         {
                             locationLabel.Text += ", " + grandchild.InnerText;
@@ -59,13 +61,15 @@ namespace XMLWeather
                     }
                 }
 
+                //show the current temperature and the range for the day
                 if (child.Name == "temperature")
                 {
-                    tempLabel.Text = child.Attributes["max"].Value + " - " + child.Attributes["min"].Value + "   C";
+                    tempLabel.Text = child.Attributes["max"].Value + " to " + child.Attributes["min"].Value + "   C";
 
                     currentLabel.Text = child.Attributes["value"].Value + " C";
                 }
 
+                //show the current type of wind outside
                 if (child.Name == "wind")
                 {
                     foreach (XmlNode grandchild in child.ChildNodes)
@@ -77,6 +81,7 @@ namespace XMLWeather
                     }
                 }
 
+                //display a image depending on the current weather outside
                 if (child.Name == "weather")
                 {
                     if (Convert.ToInt16(child.Attributes["number"].Value) < 300)
@@ -103,6 +108,7 @@ namespace XMLWeather
             }
         }
 
+        //switch the controls to the forecast screen
         private void button1_Click(object sender, EventArgs e)
         {
             // f is the form that this control is on - ("this" is the current User Control)
